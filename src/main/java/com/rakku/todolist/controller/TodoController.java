@@ -1,6 +1,6 @@
 package com.rakku.todolist.controller;
 
-import com.rakku.todolist.model.TodoModel;
+import com.rakku.todolist.model.TodoEntity;
 import com.rakku.todolist.model.TodoRequest;
 import com.rakku.todolist.model.TodoResponse;
 import com.rakku.todolist.service.TodoService;
@@ -39,7 +39,7 @@ public class TodoController {
             request.setCompleted(false);
         }
 
-        TodoModel result = this.service.add(request);
+        TodoEntity result = this.service.add(request);
 
         return ResponseEntity.ok(new TodoResponse(result));
     }
@@ -49,7 +49,7 @@ public class TodoController {
     public ResponseEntity<TodoResponse> readOne(@PathVariable Long id){
         log.info("READ ONE");
 
-        TodoModel result = this.service.searchById(id);
+        TodoEntity result = this.service.searchById(id);
 
         return ResponseEntity.ok(new TodoResponse(result));
     }
@@ -59,7 +59,7 @@ public class TodoController {
     public ResponseEntity<List<TodoResponse>> readAll(){
         log.info("READ ALL");
 
-        List<TodoModel> list = this.service.searchAll();
+        List<TodoEntity> list = this.service.searchAll();
         List<TodoResponse> response = list.stream().map(TodoResponse::new)
                                                     .collect(Collectors.toList());
 
@@ -71,7 +71,7 @@ public class TodoController {
     public ResponseEntity<TodoResponse> update(@PathVariable Long id, @RequestBody TodoRequest request){
         log.info("UPDATE");
 
-        TodoModel result = this.service.updateById(id, request);
+        TodoEntity result = this.service.updateById(id, request);
 
         return ResponseEntity.ok(new TodoResponse(result));
     }

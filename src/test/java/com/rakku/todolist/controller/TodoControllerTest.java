@@ -1,7 +1,7 @@
 package com.rakku.todolist.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rakku.todolist.model.TodoModel;
+import com.rakku.todolist.model.TodoEntity;
 import com.rakku.todolist.model.TodoRequest;
 import com.rakku.todolist.service.TodoService;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,12 +27,12 @@ class TodoControllerTest {
     @MockBean
     TodoService todoService;
 
-    private TodoModel expected;
+    private TodoEntity expected;
 
     // 각 테스트 메소드가 실행되기 전 마다 expected 초기화
     @BeforeEach
     void setup() {
-        this.expected = new TodoModel();
+        this.expected = new TodoEntity();
         this.expected.setId(123L);
         this.expected.setTitle("TEST TITLE");
         this.expected.setOrder(0L);
@@ -44,7 +44,7 @@ class TodoControllerTest {
         when(this.todoService.add(any(TodoRequest.class)))
                 .then((i) -> {
                     TodoRequest request = i.getArgument(0, TodoRequest.class);
-                    return new TodoModel(this.expected.getId(),
+                    return new TodoEntity(this.expected.getId(),
                                             request.getTitle(),
                                             this.expected.getOrder(),
                                             this.expected.getCompleted());

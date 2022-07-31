@@ -1,6 +1,6 @@
 package com.rakku.todolist.service;
 
-import com.rakku.todolist.model.TodoModel;
+import com.rakku.todolist.model.TodoEntity;
 import com.rakku.todolist.model.TodoRequest;
 import com.rakku.todolist.repository.TodoRepository;
 import lombok.AllArgsConstructor;
@@ -18,42 +18,42 @@ public class TodoService {
     private final TodoRepository todoRepository;
 
     // 아이템을 추가
-    public TodoModel add(TodoRequest request){
-        TodoModel todoModel = new TodoModel();
+    public TodoEntity add(TodoRequest request){
+        TodoEntity todoEntity = new TodoEntity();
 
-        todoModel.setTitle(request.getTitle());
-        todoModel.setOrder(request.getOrder());
-        todoModel.setCompleted(request.getCompleted());
+        todoEntity.setTitle(request.getTitle());
+        todoEntity.setOrder(request.getOrder());
+        todoEntity.setCompleted(request.getCompleted());
 
-        return this.todoRepository.save(todoModel);
+        return this.todoRepository.save(todoEntity);
     }
 
     // 특정 아이템 조회
-    public TodoModel searchById(Long id){
+    public TodoEntity searchById(Long id){
         return this.todoRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     // 리스트 조회
-    public List<TodoModel> searchAll(){
+    public List<TodoEntity> searchAll(){
         return this.todoRepository.findAll();
     }
 
     // 특정 아이템을 수정
-    public TodoModel updateById(Long id, TodoRequest request){
-        TodoModel todoModel = this.searchById(id);
+    public TodoEntity updateById(Long id, TodoRequest request){
+        TodoEntity todoEntity = this.searchById(id);
 
         if(request.getTitle() != null){
-            todoModel.setTitle(request.getTitle());
+            todoEntity.setTitle(request.getTitle());
         }
         if(request.getOrder() != null){
-            todoModel.setOrder(request.getOrder());
+            todoEntity.setOrder(request.getOrder());
         }
         if(request.getCompleted() != null){
-            todoModel.setCompleted(request.getCompleted());
+            todoEntity.setCompleted(request.getCompleted());
         }
 
-        return this.todoRepository.save(todoModel);
+        return this.todoRepository.save(todoEntity);
     }
 
     // 특정 아이템을 삭제
